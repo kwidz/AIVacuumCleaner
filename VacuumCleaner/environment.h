@@ -26,6 +26,7 @@ class Box
 public:
     Box();
     std::vector<Obstacle> getContent();
+    std::string display();
 private:
     std::vector<Obstacle> content;
 
@@ -36,6 +37,7 @@ class Environment : public QThread
 {
 public:
     Environment();
+    void changeMatrix();
     Matrix<Box,WIDTH,HEIGHT> getGrid();
     void run();
 private:
