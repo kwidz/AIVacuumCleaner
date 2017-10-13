@@ -11,7 +11,7 @@ AI::AI()
 }
 
 void AI::run(){
-    private int timeBetweenResearch = 3000;
+    int timeBetweenResearch = 3000;
     QTimer timer;
     connect(&timer, SIGNAL(timeout()), this, SLOT(timerHit()), Qt::DirectConnection);
     timer.setInterval(timeBetweenResearch);
