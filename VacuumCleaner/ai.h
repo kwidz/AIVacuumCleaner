@@ -14,6 +14,7 @@ private:
     void run();
 private slots:
     void timerHit();
+    void timerHit2();
 };
 
 
