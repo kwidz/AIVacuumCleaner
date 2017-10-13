@@ -4,6 +4,7 @@
 #define HEIGHT 10
 #include <vector>
 #include <QThread>
+#include <QTimer>
 //Environement with an array of Boxs which contains some Dust and/or Jewels
 //matrix class for easy 2d arrays
 template<class T, size_t rows, size_t cols>
@@ -35,13 +36,21 @@ private:
 
 class Environment : public QThread
 {
+    Q_OBJECT
+    signals:
+        void refreshMap(QString test);
 public:
     Environment();
     void changeMatrix();
     Matrix<Box,WIDTH,HEIGHT> getGrid();
-    void run();
+
 private:
      Matrix<Box, WIDTH, HEIGHT> grid;
+private:
+    void run();
+    QString m_test;
+private slots:
+    void timerHit();
 };
 
 
