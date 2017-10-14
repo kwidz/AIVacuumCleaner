@@ -53,8 +53,8 @@ void AI::justDoIt()
 
 void AI::timerHit()
 {
-    //timerGhetto++;
-    //timerGhetto=timerGhetto%3;
+    timerGhetto++;
+    timerGhetto=timerGhetto%3;
     if(timerGhetto==1) {
         timerHit2();
     }
@@ -117,12 +117,12 @@ Box* AI::Sensor(){
  std::vector<Point> AI::UpdateMyState(){
      //Pour chaque boite de la matrice, on regarde si elle est vide et on renvoie une liste de position de boites non vides.
      std::vector<Point> list;
-     for(int k = 0; k <= *universeSize; k++) {
-         for(int j = 0; j <= *universeSize; j++) {
+     for(int k = 1; k <= *universeSize; k++) {
+         for(int j = 1; j <= *universeSize; j++) {
              if(env[k*(*universeSize) + j].getDust() == true) {
                  Point *point = new Point();
-                 point->x = k;
-                 point->y = j;
+                 point->x = j;
+                 point->y = k;
                  list.push_back(*point);
              }
          }
