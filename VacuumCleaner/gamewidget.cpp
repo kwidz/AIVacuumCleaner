@@ -13,7 +13,7 @@ GameWidget::GameWidget(QWidget *parent) :
     QWidget(parent),
     timer(new QTimer(this)),
     generations(-1),
-    universeSize(50)
+    universeSize(10)
 {
     timer->setInterval(3000);
     m_masterColor = "#000";
@@ -189,8 +189,8 @@ void GameWidget::paintUniverse(QPainter &p)
 {
     double cellWidth = (double)width()/universeSize;
     double cellHeight = (double)height()/universeSize;
-    for(int k=0; k <= universeSize; k++) {
-        for(int j=0; j <= universeSize; j++) {
+    for(int k=1; k <= universeSize; k++) {
+        for(int j=1; j <= universeSize; j++) {
             if(universe[k*universeSize + j].getDust()) {
                 qreal left = (qreal)(cellWidth*j-cellWidth);
                 qreal top  = (qreal)(cellHeight*k-cellHeight);

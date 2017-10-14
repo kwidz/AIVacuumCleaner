@@ -26,8 +26,8 @@ AI::AI() : timer(new QTimer(this))
 {
     pos_aspi.x=10;
     pos_aspi.y=5;
-    pos_cible.x=0;
-    pos_cible.y=0;
+    pos_cible.x=1;
+    pos_cible.y=1;
 }
 
 void AI::run(){
@@ -53,18 +53,17 @@ void AI::justDoIt()
 
 void AI::timerHit()
 {
-    timerGhetto++;
-    timerGhetto=timerGhetto%3;
-    if(timerGhetto==0) {
+    //timerGhetto++;
+    //timerGhetto=timerGhetto%3;
+    if(timerGhetto==1) {
         timerHit2();
     }
-    //tous les timeBetweenActions, dirige de 1 l'aspirateur vers sa cible
-    srand (time(NULL));
 
     //INTENTION
     //Trouver le plus court chemin pour aller a x1,y1 et effectuer l'action à part. dans le Run.
     justDoIt();
 
+    srand (time(NULL));
 
 
 }
@@ -85,7 +84,7 @@ void AI::timerHit2()
     std::vector<Point> v;
     v = UpdateMyState();
     pos_cible = ChooseAnAction(v);
-    machineLearning();
+    //machineLearning();
 
    //Résultat : tous les timeBetweenResearch, on effectue une remise en question. Mais sinon, on se dirige vers l'objectif courrant.
 
