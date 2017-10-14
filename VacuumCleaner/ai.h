@@ -17,23 +17,29 @@ class Point
 
 class AI : public QThread
 {
-
+public :
+    Box* universe;
+    int* universeSize;
+    Point pos_aspi;
+private :
+    QTimer* timer;
 
     Q_OBJECT
     signals:
         void refreshMap(QString test);
 public:
     AI();
+    void timerHit();
+    void justDoIt();
+
 private:
     void run();
     void machineLearning();
-    Matrix<Box, WIDTH, HEIGHT>ObserveEnvironmentWithAllMySensors();
+    Box* ObserveEnvironmentWithAllMySensors();
     std::vector<Point> UpdateMyState();
     Point ChooseAnAction(std::vector<Point> v);
-    void justDoIt();
-    Matrix<Box, WIDTH, HEIGHT> Sensor();
-private slots:
-    void timerHit();
+    Box* Sensor();
+public slots:
     void timerHit2();
 };
 

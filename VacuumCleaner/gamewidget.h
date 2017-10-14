@@ -4,6 +4,7 @@
 #include <QColor>
 #include <QWidget>
 #include "environment.h"
+#include "ai.h"
 
 class GameWidget : public QWidget
 {
@@ -49,6 +50,7 @@ private:
     QColor m_masterColor;
     QTimer* timer;
     int generations;
+    AI ai;
     Box* universe; // map
     Box* next; // map
     int universeSize;

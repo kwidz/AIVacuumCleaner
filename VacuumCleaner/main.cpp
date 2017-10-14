@@ -12,12 +12,9 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow w;
-    //AI i;
     w.setWindowTitle("AI VAcuum Cleaner");
-   // i.start();
     w.show();
     a.exec();
-    //i.quit();
-    //i.wait();
+
 
 }

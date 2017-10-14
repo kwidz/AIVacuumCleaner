@@ -3,6 +3,7 @@
 #include <QMouseEvent>
 #include <QDebug>
 #include <QRectF>
+#include "ai.h"
 #include <QPainter>
 #include <qmath.h>
 #include "gamewidget.h"
@@ -29,6 +30,11 @@ GameWidget::~GameWidget()
 void GameWidget::startGame(const int &number)
 {
     generations = 1;
+    ai.universe = this->universe;
+    ai.universeSize = &universeSize;
+    ai.start();
+    ai.quit();
+    ai.wait();
     timer->start();
 }
 
@@ -113,6 +119,7 @@ void GameWidget::setInterval(int msec)
 void GameWidget::newTurn()
 {
     std::cout<<"passed";
+    ai.timerHit();
     if(generations>0){
     srand (time(NULL));
     int randomX = rand()% universeSize;
@@ -193,6 +200,12 @@ void GameWidget::paintUniverse(QPainter &p)
             }
         }
     }
+    //painting vacuum position
+    qreal left = (qreal)(cellWidth*ai.pos_aspi.x-cellWidth);
+    qreal top  = (qreal)(cellHeight*ai.pos_aspi.y-cellHeight);
+    QRectF r(left, top, (qreal)cellWidth, (qreal)cellHeight);
+    QColor vacuumColor="#F00";
+    p.fillRect(r, QBrush(vacuumColor));
 }
 
 QColor GameWidget::masterColor()

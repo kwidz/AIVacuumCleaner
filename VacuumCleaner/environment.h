@@ -37,12 +37,4 @@ private:
     bool jewel=false;
 
 };
-
-
-
-
-
-
-
-
 #endif // ENVIRONMENT_H
