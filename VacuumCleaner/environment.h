@@ -10,8 +10,8 @@
 template<class T, size_t rows, size_t cols>
 class Matrix
 {
-    std::array<T, rows * cols> m_Data;
 public:
+    std::array<T, rows * cols> m_Data;
     T& operator()(size_t y, size_t x)
     {
         return m_Data[y * cols + x];
@@ -19,7 +19,7 @@ public:
 };
 
 
-enum Obstacle { Dust, Jewel};
+enum Obstacle {Dust, Jewel};
 
 //the box which is containing Dust or jewel
 class Box

@@ -28,8 +28,8 @@ private:
     void run();
     void machineLearning();
     Matrix<Box, WIDTH, HEIGHT>ObserveEnvironmentWithAllMySensors();
-    void UpdateMyState();
-    void ChooseAnAction();
+    std::vector<Point> UpdateMyState();
+    Point ChooseAnAction(std::vector<Point> v);
     void justDoIt();
     Matrix<Box, WIDTH, HEIGHT> Sensor();
 private slots:

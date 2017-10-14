@@ -31,7 +31,6 @@ AI::AI()
 
 void AI::run(){
 
-    std::cout << "aiRun";
     QTimer timer;
     QTimer timer2;
     connect(&timer, SIGNAL(timeout()), this, SLOT(timerHit()), Qt::DirectConnection);
@@ -49,7 +48,6 @@ void AI::run(){
 void AI::timerHit2()
 {
     //tous les timeBetweenActions, dirige de 1 l'aspirateur vers sa cible
-    std::cout << "timer1";
     srand (time(NULL));
 
     //algo rapide
@@ -74,20 +72,18 @@ void AI::timerHit2()
 
 void AI::timerHit()
 {
-    int choix_x;
-    int choix_y;
-
     srand (time(NULL));
-    std::cout << "timer2";
 
    //Reparser la carte et regarder si l'objectif fixé avant est toujours le plus optimal
 
    // BELIEF - Récupérer ce qu'on sait sur la carte. Supposé ici : on connaît la carte en son ensemble, a ajouter un filtre si besoin/envie
-   //Matrix m = Environment::getGrid();      -----  A appeler quand la matrice sera effective
    env = ObserveEnvironmentWithAllMySensors();
 
    //DESIRE
    //Regarder ce qui est rentable de faire - ce qu'on veux faire au final. Exemple : exterminer la tache en X1,Y1
+    std::vector<Point> v;
+    v = UpdateMyState();
+    Point choixDestination = ChooseAnAction(v);
 
    //TODO TT Parse la grille et, par rapport au gain, faire un choix de cible
    //x_cible= choix.x;
@@ -123,7 +119,22 @@ Matrix<Box, WIDTH, HEIGHT> AI::ObserveEnvironmentWithAllMySensors(){
 
 
 Matrix<Box, WIDTH, HEIGHT> AI::Sensor(){
-    //Todo Geoffrey
+    //Todo Geoffrey - récuperer depuis l'environnment
     Matrix<Box, WIDTH, HEIGHT> *m = new Matrix<Box, WIDTH, HEIGHT>;
 }
 
+ std::vector<Point> AI::UpdateMyState(){
+    for (Box &bobox : env.m_Data){
+        //Pour chaque boite de la matrice, on regarde si elle est vide et on renvoie une liste de position de boites non vides.
+
+        //Obstacle o = bobox.getContent();
+        //if (o == dynamic_cast<Box*>(o)){
+        //}
+    }
+    std::vector<Point> v;
+    return v;
+ }
+
+Point AI::ChooseAnAction(std::vector<Point> v){
+
+}
