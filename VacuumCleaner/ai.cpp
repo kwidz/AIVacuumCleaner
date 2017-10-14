@@ -1,18 +1,28 @@
 #include "ai.h"
 #include "environment.h"
 #include<iostream>
+#define WIDTH 10
+#define HEIGHT 10
 #include <vector>
 #include <thread>
 #include <chrono>
 #include <time.h>
 #include <stdlib.h>
+#include <math.h>
 
 //position de l'aspirateur
-int x;
-int y;
+Point pos_aspi;
 //position de la cible
-int x_cible;
-int y_cible;
+Point pos_cible;
+
+int timeBetweenResearch = 5000;
+int timeBetweenActions = 1000;
+
+int currentEnergy=50;
+int TotalEnergy=50;
+
+
+Matrix<Box, WIDTH, HEIGHT> env;
 
 AI::AI()
 {
@@ -22,8 +32,6 @@ AI::AI()
 void AI::run(){
 
     std::cout << "aiRun";
-    int timeBetweenResearch = 5000;
-    int timeBetweenActions = 1000;
     QTimer timer;
     QTimer timer2;
     connect(&timer, SIGNAL(timeout()), this, SLOT(timerHit()), Qt::DirectConnection);
@@ -45,14 +53,14 @@ void AI::timerHit2()
     srand (time(NULL));
 
     //algo rapide
-    if(x<x_cible) {
-        x++;
-    } else if (x>x_cible) {
-        x--;
-    } else if (y>y_cible){
-        y--;
-    } else if (y<y_cible){
-        y++;
+    if(pos_aspi.x<pos_cible.x) {
+        pos_aspi.x++;
+    } else if (pos_aspi.x>pos_cible.x) {
+       pos_aspi.x--;
+    } else if (pos_aspi.y>pos_cible.y){
+        pos_aspi.y--;
+    } else if (pos_aspi.y<pos_cible.y){
+        pos_aspi.y++;
     } else /*Sur la cible*/ {
         //Aspire / récupère selon le type de la case sur laquelle il se trouve
         //Sinon si la case est vide / do nothing. L'aspirateur n'a plus de but et attends une nouvelle cible
@@ -76,9 +84,7 @@ void AI::timerHit()
 
    // BELIEF - Récupérer ce qu'on sait sur la carte. Supposé ici : on connaît la carte en son ensemble, a ajouter un filtre si besoin/envie
    //Matrix m = Environment::getGrid();      -----  A appeler quand la matrice sera effective
-
-
-   int matrixDeRemplacement [10][10];
+   env = ObserveEnvironmentWithAllMySensors();
 
    //DESIRE
    //Regarder ce qui est rentable de faire - ce qu'on veux faire au final. Exemple : exterminer la tache en X1,Y1
@@ -87,7 +93,7 @@ void AI::timerHit()
    //x_cible= choix.x;
    //y_cible = choix.y;
 
-   machineLearning(choix_x, choix_y);
+   machineLearning();
 
 
    //INTENTION
@@ -98,15 +104,26 @@ void AI::timerHit()
 
 }
 
-void AI::machineLearning(int x,int y){
+void AI::machineLearning(){
 
 //Cette fonction va adapter le temps entre deux recherches de l'environnement selon ses dernières expériences
 
-if (x != x_cible || y != y_cible)
+if (pos_aspi.x != pos_cible.x || pos_aspi.y != pos_cible.y)
 {
    timeBetweenResearch += 500;
 } else {
     timeBetweenResearch -= 500;
 }
+}
+
+Matrix<Box, WIDTH, HEIGHT> AI::ObserveEnvironmentWithAllMySensors(){
+    Matrix<Box, WIDTH, HEIGHT> m;
+    m = Sensor();
+}
+
+
+Matrix<Box, WIDTH, HEIGHT> AI::Sensor(){
+    //Todo Geoffrey
+    Matrix<Box, WIDTH, HEIGHT> *m = new Matrix<Box, WIDTH, HEIGHT>;
 }
 
