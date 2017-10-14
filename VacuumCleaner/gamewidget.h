@@ -3,6 +3,7 @@
 
 #include <QColor>
 #include <QWidget>
+#include "environment.h"
 
 class GameWidget : public QWidget
 {
@@ -42,16 +43,16 @@ public slots:
 private slots:
     void paintGrid(QPainter &p);
     void paintUniverse(QPainter &p);
-    void newGeneration();
+    void newTurn();
 
 private:
     QColor m_masterColor;
     QTimer* timer;
     int generations;
-    bool* universe; // map
-    bool* next; // map
+    Box* universe; // map
+    Box* next; // map
     int universeSize;
-    bool isAlive(int k, int j); // return true if universe[k][j] accept rules
+    bool isDust(int k, int j); // return true if universe[k][j] accept rules
     void resetUniverse();// reset the size of universe
 };
 

@@ -12,19 +12,12 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow w;
-    Environment e;
-    AI i;
-    QLabel *label = new QLabel;
-    w.layout()->addWidget(label);
+    //AI i;
     w.setWindowTitle("AI VAcuum Cleaner");
-    QObject::connect(&e, SIGNAL(refreshMap(QString)), label, SLOT(setText(QString)), Qt::QueuedConnection);
-    e.start();
-    i.start();
+   // i.start();
     w.show();
     a.exec();
-    e.quit();
-    i.quit();
-    i.wait();
-    e.wait();
+    //i.quit();
+    //i.wait();
 
 }

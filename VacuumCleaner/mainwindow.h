@@ -2,7 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
+#include <QColor>
+#include "gamewidget.h"
 
 namespace Ui {
 class MainWindow;
@@ -15,9 +16,15 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void selectMasterColor();
+
+    void saveGame();
+    void loadGame();
 
 private:
     Ui::MainWindow *ui;
+    QColor currentColor;
+    GameWidget* game;
 };
 
 #endif // MAINWINDOW_H

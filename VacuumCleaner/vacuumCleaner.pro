@@ -27,15 +27,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    environment.cpp \
-    gamewidget.cpp
-    ai.cpp
+        environment.cpp \
+        gamewidget.cpp \
+        ai.cpp
 
 HEADERS += \
         mainwindow.h \
-    environment.h \
-    gamewidget.h
-    ai.h
+        environment.h \
+        gamewidget.h \
+        ai.h
 
 FORMS += \
         mainwindow.ui

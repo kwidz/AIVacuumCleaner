@@ -26,32 +26,19 @@ class Box
 {
 public:
     Box();
-    std::vector<Obstacle> getContent();
-    std::string display();
+    bool getDust();
+    bool getJewel();
+    bool addDust();
+    bool addJewel();
+    void deleteDust();
+    void deleteJewel();
 private:
-    std::vector<Obstacle> content;
-
+    bool dust=false;
+    bool jewel=false;
 
 };
 
-class Environment : public QThread
-{
-    Q_OBJECT
-    signals:
-        void refreshMap(QString test);
-public:
-    Environment();
-    void changeMatrix();
-    Matrix<Box,WIDTH,HEIGHT> getGrid();
 
-private:
-     Matrix<Box, WIDTH, HEIGHT> grid;
-private:
-    void run();
-    QString m_test;
-private slots:
-    void timerHit();
-};
 
 
 
