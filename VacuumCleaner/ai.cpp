@@ -26,6 +26,8 @@ AI::AI() : timer(new QTimer(this))
 {
     pos_aspi.x=10;
     pos_aspi.y=5;
+    pos_cible.x=0;
+    pos_cible.y=0;
 }
 
 void AI::run(){
@@ -51,7 +53,7 @@ void AI::justDoIt()
 
 void AI::timerHit()
 {
-    timerGhetto ++;
+    timerGhetto++;
     timerGhetto=timerGhetto%3;
     if(timerGhetto==0) {
         timerHit2();
@@ -82,7 +84,7 @@ void AI::timerHit2()
    //Regarder ce qui est rentable de faire - ce qu'on veux faire au final. Exemple : exterminer la tache en X1,Y1
     std::vector<Point> v;
     v = UpdateMyState();
-    Point choixDestination = ChooseAnAction(v);
+    pos_cible = ChooseAnAction(v);
     machineLearning();
 
    //Résultat : tous les timeBetweenResearch, on effectue une remise en question. Mais sinon, on se dirige vers l'objectif courrant.
@@ -105,6 +107,7 @@ if (pos_aspi.x != pos_cible.x || pos_aspi.y != pos_cible.y)
 Box* AI::ObserveEnvironmentWithAllMySensors(){
     Box* m;
     m = Sensor();
+    return m;
 }
 
 
@@ -115,9 +118,9 @@ Box* AI::Sensor(){
  std::vector<Point> AI::UpdateMyState(){
      //Pour chaque boite de la matrice, on regarde si elle est vide et on renvoie une liste de position de boites non vides.
      std::vector<Point> list;
-     for(int k = 1; k <= *universeSize; k++) {
-         for(int j = 1; j <= *universeSize; j++) {
-             if(universe[k*(*universeSize) + j].getDust() == Dust) {
+     for(int k = 0; k <= *universeSize; k++) {
+         for(int j = 0; j <= *universeSize; j++) {
+             if(env[k*(*universeSize) + j].getDust() == true) {
                  Point *point = new Point();
                  point->x = k;
                  point->y = j;

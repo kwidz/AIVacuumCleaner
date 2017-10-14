@@ -30,7 +30,7 @@ GameWidget::~GameWidget()
 void GameWidget::startGame(const int &number)
 {
     generations = 1;
-    ai.universe = this->universe;
+    ai.universe = universe;
     ai.universeSize = &universeSize;
     ai.start();
     ai.quit();
@@ -118,15 +118,14 @@ void GameWidget::setInterval(int msec)
 
 void GameWidget::newTurn()
 {
-    std::cout<<"passed";
     ai.timerHit();
     if(generations>0){
     srand (time(NULL));
-    int randomX = rand()% universeSize;
-    int randomY = rand()% universeSize;
+    int randomX = rand()% universeSize+1;
+    int randomY = rand()% universeSize+1;
     while(!(universe[randomY*universeSize +randomX ].addDust())){
-        randomY = rand()% universeSize;
-        randomX = rand()% universeSize;
+        randomY = rand()% universeSize+1;
+        randomX = rand()% universeSize+1;
     }
     update();
 }
@@ -190,8 +189,8 @@ void GameWidget::paintUniverse(QPainter &p)
 {
     double cellWidth = (double)width()/universeSize;
     double cellHeight = (double)height()/universeSize;
-    for(int k=1; k <= universeSize; k++) {
-        for(int j=1; j <= universeSize; j++) {
+    for(int k=0; k <= universeSize; k++) {
+        for(int j=0; j <= universeSize; j++) {
             if(universe[k*universeSize + j].getDust()) {
                 qreal left = (qreal)(cellWidth*j-cellWidth);
                 qreal top  = (qreal)(cellHeight*k-cellHeight);
