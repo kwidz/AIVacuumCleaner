@@ -66,6 +66,9 @@ void AI::timerHit2()
 
 void AI::timerHit()
 {
+    int choix_x;
+    int choix_y;
+
     srand (time(NULL));
     std::cout << "timer2";
 
@@ -84,6 +87,8 @@ void AI::timerHit()
    //x_cible= choix.x;
    //y_cible = choix.y;
 
+   machineLearning(choix_x, choix_y);
+
 
    //INTENTION
    //Trouver le plus court chemin pour aller a x1,y1 et effectuer l'action à part. dans le Run.
@@ -91,5 +96,17 @@ void AI::timerHit()
    //Résultat : tous les timeBetweenResearch, on effectue une remise en question. Mais sinon, on se dirige vers l'objectif courrant.
 
 
+}
+
+void AI::machineLearning(int x,int y){
+
+//Cette fonction va adapter le temps entre deux recherches de l'environnement selon ses dernières expériences
+
+if (x != x_cible || y != y_cible)
+{
+   timeBetweenResearch += 500;
+} else {
+    timeBetweenResearch -= 500;
+}
 }
 

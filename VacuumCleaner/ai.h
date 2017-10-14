@@ -12,6 +12,7 @@ public:
     AI();
 private:
     void run();
+    void machineLearning(int x, int y);
 private slots:
     void timerHit();
     void timerHit2();
