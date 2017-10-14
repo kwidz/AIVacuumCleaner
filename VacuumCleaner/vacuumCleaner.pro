@@ -29,11 +29,13 @@ SOURCES += \
         mainwindow.cpp \
     environment.cpp \
     gamewidget.cpp
+    ai.cpp
 
 HEADERS += \
         mainwindow.h \
     environment.h \
     gamewidget.h
+    ai.h
 
 FORMS += \
         mainwindow.ui
