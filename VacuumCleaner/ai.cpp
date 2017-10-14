@@ -46,8 +46,8 @@ void AI::justDoIt()
     } else if (pos_aspi.y<pos_cible.y){
         pos_aspi.y++;
     } else /*Sur la cible*/ {
-        //Aspire / récupère selon le type de la case sur laquelle il se trouve
-        //Sinon si la case est vide / do nothing. L'aspirateur n'a plus de but et attends une nouvelle cible
+        env[pos_aspi.y*(*universeSize) + pos_aspi.x].deleteDust();
+        env[pos_aspi.y*(*universeSize) + pos_aspi.x].deleteJewel();
     }
 }
 
