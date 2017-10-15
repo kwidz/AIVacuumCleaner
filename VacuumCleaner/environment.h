@@ -1,7 +1,7 @@
 #ifndef ENVIRONMENT_H
 #define ENVIRONMENT_H
-#define PERCENTAGE_JEWELS 80
-#define PERCENTAGE_DUST 80
+#define PERCENTAGE_JEWELS 15 
+#define PERCENTAGE_DUST 30
 #include <vector>
 #include <QThread>
 #include <QTimer>
