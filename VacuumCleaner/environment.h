@@ -1,7 +1,7 @@
 #ifndef ENVIRONMENT_H
 #define ENVIRONMENT_H
-#define WIDTH 10
-#define HEIGHT 10
+#define PERCENTAGE_JEWELS 80
+#define PERCENTAGE_DUST 80
 #include <vector>
 #include <QThread>
 #include <QTimer>

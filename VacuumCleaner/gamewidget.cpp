@@ -15,7 +15,7 @@ GameWidget::GameWidget(QWidget *parent) :
     generations(-1),
     universeSize(10)
 {
-    timer->setInterval(3000);
+    timer->setInterval(100);
     m_masterColor = "#000";
     universe = new Box[(universeSize + 2) * (universeSize + 2)];
     connect(timer, SIGNAL(timeout()), this, SLOT(newTurn()));
@@ -72,6 +72,7 @@ void GameWidget::resetUniverse()
     delete [] universe;
     universe = new Box[(universeSize + 2) * (universeSize + 2)];
     memset(universe, false, sizeof(Box)*(universeSize + 2) * (universeSize + 2));
+    timer->stop();
 }
 
 QString GameWidget::dump()
@@ -121,11 +122,15 @@ void GameWidget::newTurn()
     ai.timerHit();
     if(generations>0){
     srand (time(NULL));
-    int randomX = rand()% universeSize+1;
-    int randomY = rand()% universeSize+1;
-    while(!(universe[randomY*universeSize +randomX ].addDust())){
-        randomY = rand()% universeSize+1;
-        randomX = rand()% universeSize+1;
+    if(rand()% 101 < PERCENTAGE_DUST){
+        int randomX = rand()% universeSize+1;
+        int randomY = rand()% universeSize+1;
+        universe[randomY*universeSize +randomX ].addDust();
+    }
+    if(rand()% 101 < PERCENTAGE_JEWELS){
+        int randomX = rand()% universeSize+1;
+        int randomY = rand()% universeSize+1;
+        universe[randomY*universeSize +randomX ].addJewel();
     }
     update();
 }
@@ -192,10 +197,31 @@ void GameWidget::paintUniverse(QPainter &p)
     for(int k=1; k <= universeSize; k++) {
         for(int j=1; j <= universeSize; j++) {
             if(universe[k*universeSize + j].getDust()) {
+                if(universe[k*universeSize + j].getJewel()){
+                    qreal left = (qreal)(cellWidth*j-cellWidth);
+                    qreal top  = (qreal)(cellHeight*k-cellHeight);
+                    QRectF r1(left, top, (qreal)cellWidth/2, (qreal)cellHeight);
+                    QColor jewelColor="#ed7e00";
+                    p.fillRect(r1, QBrush(jewelColor));
+                    left = (qreal)(cellWidth*j-cellWidth/2);
+                    top  = (qreal)(cellHeight*k-cellHeight);
+                    QRectF r2(left, top, (qreal)cellWidth/2, (qreal)cellHeight);
+                    p.fillRect(r2, QBrush(masterColor()));
+                }
+                else{
+                    qreal left = (qreal)(cellWidth*j-cellWidth);
+                    qreal top  = (qreal)(cellHeight*k-cellHeight);
+                    QRectF r(left, top, (qreal)cellWidth, (qreal)cellHeight);
+                    p.fillRect(r, QBrush(m_masterColor));
+                }
+            }
+            else
+            if(universe[k*universeSize + j].getJewel()) {
                 qreal left = (qreal)(cellWidth*j-cellWidth);
                 qreal top  = (qreal)(cellHeight*k-cellHeight);
                 QRectF r(left, top, (qreal)cellWidth, (qreal)cellHeight);
-                p.fillRect(r, QBrush(m_masterColor));
+                QColor jewelColor="#ed7e00";
+                p.fillRect(r, QBrush(jewelColor));
             }
         }
     }

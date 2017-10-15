@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <iostream>
 
+
 Box::Box(){
     this->dust=false;
     this->jewel=false;
