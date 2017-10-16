@@ -1,5 +1,7 @@
 #include "ai.h"
 #include "environment.h"
+#include "sensor.h"
+#include "effector.h"
 #include<iostream>
 #include <QTimer>
 #include <vector>
@@ -16,6 +18,7 @@ Point whatToDo;
 int timerGhetto;
 Box* env;
 int energy;
+int overallPoints;
 
 int timeBetweenResearch = 5000;
 int timeBetweenActions = 1000;
@@ -29,6 +32,8 @@ AI::AI() : timer(new QTimer(this))
     pos_aspi.y=5;
     pos_cible.x=1;
     pos_cible.y=1;
+    effecteur.position = pos_cible;
+
 }
 
 void AI::run(){
@@ -47,8 +52,15 @@ void AI::justDoIt()
     } else if (pos_aspi.y<pos_cible.y){
         pos_aspi.y++;
     } else /*Sur la cible*/ {
-        env[pos_aspi.y*(*universeSize) + pos_aspi.x].deleteDust();
-        env[pos_aspi.y*(*universeSize) + pos_aspi.x].deleteJewel();
+        if ( env[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].getDust() && nv[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].getJewel()) {
+            overallPoints-=2;
+        } else if (env[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].getDust() || env[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].getJewel()){
+            overallPoints++;
+        }else{
+            overallPoints--;
+        }
+        env[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].deleteDust();
+        env[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].deleteJewel();
     }
     energy--;
 }
@@ -106,21 +118,16 @@ if (pos_aspi.x != pos_cible.x || pos_aspi.y != pos_cible.y)
 
 Box* AI::ObserveEnvironmentWithAllMySensors(){
     Box* m;
-    m = Sensor();
+    m = senseur.getUniverse();
     return m;
-}
-
-
-Box* AI::Sensor(){
-    return universe;
 }
 
  std::vector<Point> AI::UpdateMyState(){
      //Pour chaque boite de la matrice, on regarde si elle est vide et on renvoie une liste de position de boites non vides.
      std::vector<Point> list;
-     for(int k = 1; k <= *universeSize; k++) {
-         for(int j = 1; j <= *universeSize; j++) {
-             if(env[k*(*universeSize) + j].getDust() == true) {
+     for(int k = 1; k <= *senseur.getUniverseSize(); k++) {
+         for(int j = 1; j <= *senseur.getUniverseSize(); j++) {
+             if(env[k*(*senseur.getUniverseSize()) + j].getDust() == true) {
                  Point *point = new Point();
                  point->x = j;
                  point->y = k;
@@ -130,9 +137,9 @@ Box* AI::Sensor(){
      }
      //Le but est de ramasser la poussiere, il cherche les bijoux uniquement si il n'y a pas de poussiere
      if(list.size() == 0) {
-         for(int k = 1; k <= *universeSize; k++) {
-             for(int j = 1; j <= *universeSize; j++) {
-                 if(env[k*(*universeSize) + j].getJewel() == true) {
+         for(int k = 1; k <= *senseur.getUniverseSize(); k++) {
+             for(int j = 1; j <= *senseur.getUniverseSize(); j++) {
+                 if(env[k*(*senseur.getUniverseSize()) + j].getJewel() == true) {
                      Point *point = new Point();
                      point->x = j;
                      point->y = k;
@@ -147,9 +154,9 @@ Box* AI::Sensor(){
 Point AI::ChooseAnAction(std::vector<Point> v){
     int distanceMin = 10000;
     Point pointMin;
-    pointMin.x = 0;
-    pointMin.y = 0;
-    if ((p.x+p.y) <= energy){
+    pointMin.x = 1;
+    pointMin.y = 1;
+    if ((pos_aspi.x+pos_aspi.y) <= energy){
         return pointMin;
     }
     for (Point &p : v){
@@ -159,6 +166,8 @@ Point AI::ChooseAnAction(std::vector<Point> v){
             distanceMin = (abs(p.x - pos_aspi.x) + abs(p.y - pos_aspi.y));
             pointMin = p;
             }
+        } else {
+            pointMin = pos_aspi;
         }
     }
     return pointMin;

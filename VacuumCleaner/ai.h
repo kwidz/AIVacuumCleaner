@@ -4,6 +4,8 @@
 #include <vector>
 #include <QThread>
 #include <QTimer>
+#include "sensor.h"
+#include "effector.h"
 
 
 class Point
@@ -18,9 +20,9 @@ class Point
 class AI : public QThread
 {
 public :
-    Box* universe;
-    int* universeSize;
     Point pos_aspi;
+    sensor senseur;
+    effector effecteur;
 private :
     QTimer* timer;
 

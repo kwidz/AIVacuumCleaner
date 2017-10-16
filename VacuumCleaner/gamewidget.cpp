@@ -30,8 +30,8 @@ GameWidget::~GameWidget()
 void GameWidget::startGame(const int &number)
 {
     generations = 1;
-    ai.universe = universe;
-    ai.universeSize = &universeSize;
+    ai.senseur.universe = universe;
+    ai.senseur.universeSize = &universeSize;
     ai.start();
     ai.quit();
     ai.wait();
