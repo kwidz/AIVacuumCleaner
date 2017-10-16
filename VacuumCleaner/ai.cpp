@@ -15,6 +15,7 @@ Point pos_cible;
 Point whatToDo;
 int timerGhetto;
 Box* env;
+int energy;
 
 int timeBetweenResearch = 5000;
 int timeBetweenActions = 1000;
@@ -49,6 +50,7 @@ void AI::justDoIt()
         env[pos_aspi.y*(*universeSize) + pos_aspi.x].deleteDust();
         env[pos_aspi.y*(*universeSize) + pos_aspi.x].deleteJewel();
     }
+    energy--;
 }
 
 void AI::timerHit()
@@ -60,7 +62,6 @@ void AI::timerHit()
     }
 
     //INTENTION
-    //Trouver le plus court chemin pour aller a x1,y1 et effectuer l'action à part. dans le Run.
     justDoIt();
 
     srand (time(NULL));
@@ -127,6 +128,19 @@ Box* AI::Sensor(){
              }
          }
      }
+     //Le but est de ramasser la poussiere, il cherche les bijoux uniquement si il n'y a pas de poussiere
+     if(list.size() == 0) {
+         for(int k = 1; k <= *universeSize; k++) {
+             for(int j = 1; j <= *universeSize; j++) {
+                 if(env[k*(*universeSize) + j].getJewel() == true) {
+                     Point *point = new Point();
+                     point->x = j;
+                     point->y = k;
+                     list.push_back(*point);
+                 }
+             }
+         }
+     }
     return list;
  }
 
@@ -135,6 +149,9 @@ Point AI::ChooseAnAction(std::vector<Point> v){
     Point pointMin;
     pointMin.x = 0;
     pointMin.y = 0;
+    if ((p.x+p.y) <= energy){
+        return pointMin;
+    }
     for (Point &p : v){
         if (!v.empty()){
             //Calcul de distance et renvoie du point le plus près..
