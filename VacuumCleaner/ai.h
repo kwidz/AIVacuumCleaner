@@ -23,6 +23,9 @@ public:
     void timerHit();
     void justDoIt();
 
+    Point getPos_aspi() const;
+    void setPos_aspi(const Point &value);
+
 private:
     void run();
     void machineLearning();

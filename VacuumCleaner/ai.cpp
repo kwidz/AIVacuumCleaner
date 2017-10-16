@@ -26,12 +26,24 @@ int timeBetweenActions = 1000;
 int currentEnergy=50;
 int TotalEnergy=50;
 
+Point AI::getPos_aspi() const
+{
+    return pos_aspi;
+}
+
+void AI::setPos_aspi(const Point &value)
+{
+    pos_aspi = value;
+}
+
 AI::AI() : timer(new QTimer(this))
 {
     pos_aspi.x=10;
     pos_aspi.y=5;
     pos_cible.x=1;
     pos_cible.y=1;
+    effecteur.position = &pos_aspi;
+
 
 }
 
@@ -43,13 +55,13 @@ void AI::run(){
 void AI::justDoIt()
 {
     if(pos_aspi.x<pos_cible.x) {
-        pos_aspi.x++;
+        effecteur.movex(1);
     } else if (pos_aspi.x>pos_cible.x) {
-       pos_aspi.x--;
-    } else if (pos_aspi.y>pos_cible.y){
-        pos_aspi.y--;
+      effecteur.movex(-1);
     } else if (pos_aspi.y<pos_cible.y){
-        pos_aspi.y++;
+       effecteur.movey(1);
+    } else if (pos_aspi.y>pos_cible.y){
+        effecteur.movey(-1);
     } else /*Sur la cible*/ {
         if ( env[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].getDust() && env[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].getJewel()) {
             overallPoints-=2;
@@ -58,10 +70,9 @@ void AI::justDoIt()
         }else{
             overallPoints--;
         }
-        env[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].deleteDust();
-        env[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].deleteJewel();
-    }
-    energy--;
+        effecteur.vaccum(env, pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x);
+        energy--;
+}
 }
 
 void AI::timerHit()

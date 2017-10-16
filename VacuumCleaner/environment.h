@@ -5,6 +5,7 @@
 #include <vector>
 #include <QThread>
 #include <QTimer>
+
 //Environement with an array of Boxs which contains some Dust and/or Jewels
 //matrix class for easy 2d arrays
 template<class T, size_t rows, size_t cols>

@@ -7,7 +7,10 @@ class effector
 {
 public:
     effector();
-
+    void movex(int a);
+    void movey(int a);
+    void vaccum(Box* environment, int position);
+    Point* position;
 };
 
 #endif // EFFECTOR_H
