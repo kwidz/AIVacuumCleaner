@@ -31,7 +31,8 @@ SOURCES += \
         gamewidget.cpp \
         ai.cpp \
     sensor.cpp \
-    effector.cpp
+    effector.cpp \
+    point.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -39,7 +40,8 @@ HEADERS += \
         gamewidget.h \
         ai.h \
     sensor.h \
-    effector.h
+    effector.h \
+    point.h
 
 FORMS += \
         mainwindow.ui

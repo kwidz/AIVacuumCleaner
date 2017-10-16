@@ -1,21 +1,10 @@
 #ifndef AI_H
 #define AI_H
-#include "environment.h"
 #include <vector>
 #include <QThread>
 #include <QTimer>
 #include "sensor.h"
 #include "effector.h"
-
-
-class Point
-{
-    public:
-        int x, y;
-    public:
-        Point() : x(0), y(0) {}
-        Point(int x, int y) : x(x), y(y) {}
-};
 
 class AI : public QThread
 {

@@ -32,7 +32,6 @@ AI::AI() : timer(new QTimer(this))
     pos_aspi.y=5;
     pos_cible.x=1;
     pos_cible.y=1;
-    effecteur.position = pos_cible;
 
 }
 
@@ -52,7 +51,7 @@ void AI::justDoIt()
     } else if (pos_aspi.y<pos_cible.y){
         pos_aspi.y++;
     } else /*Sur la cible*/ {
-        if ( env[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].getDust() && nv[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].getJewel()) {
+        if ( env[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].getDust() && env[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].getJewel()) {
             overallPoints-=2;
         } else if (env[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].getDust() || env[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].getJewel()){
             overallPoints++;
