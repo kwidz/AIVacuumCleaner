@@ -224,6 +224,11 @@ void GameWidget::paintUniverse(QPainter &p)
                 p.fillRect(r, QBrush(jewelColor));
             }
         }
+        //TODO
+        this->dustRemoved->setText(QString("Dust removed : ").append(QString("%1").arg(10)));
+        this->jewelPicks->setText(QString("Jewels picked up : ").append(QString("%1").arg(10)));
+        this->jewelRemoved->setText(QString("Jewels destroyed : ").append(QString("%1").arg(10)));
+        this->energyPerActions->setText(QString("Energy spent per actions : ").append(QString("%1").arg(10)));
     }
     //painting vacuum position
     qreal left = (qreal)(cellWidth*ai.pos_aspi.x-cellWidth);

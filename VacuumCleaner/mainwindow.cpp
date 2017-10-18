@@ -27,6 +27,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->mainLayout->setStretchFactor(ui->gameLayout, 8);
     ui->mainLayout->setStretchFactor(ui->setLayout, 2);
     ui->gameLayout->addWidget(game);
+    game->dustRemoved = ui->DustRemoved;
+    game->jewelPicks = ui->JewelsPicks;
+    game->jewelRemoved = ui->JewelsDestroyed;
+    game->energyPerActions = ui->SpentEnergyPerActions;
 }
 
 MainWindow::~MainWindow()

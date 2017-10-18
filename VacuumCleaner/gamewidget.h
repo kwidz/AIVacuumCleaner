@@ -3,8 +3,10 @@
 
 #include <QColor>
 #include <QWidget>
+#include <QLabel>
 #include "environment.h"
 #include "ai.h"
+
 
 class GameWidget : public QWidget
 {
@@ -12,6 +14,11 @@ class GameWidget : public QWidget
 public:
     explicit GameWidget(QWidget *parent = 0);
     ~GameWidget();
+    QLabel* dustRemoved;
+    QLabel* jewelRemoved;
+    QLabel* jewelPicks;
+    QLabel* energyPerActions;
+
 
 protected:
     void paintEvent(QPaintEvent *);
@@ -56,6 +63,8 @@ private:
     int universeSize;
     bool isDust(int k, int j); // return true if universe[k][j] accept rules
     void resetUniverse();// reset the size of universe
+
+
 };
 
 #endif // GAMEWIDGET_H
