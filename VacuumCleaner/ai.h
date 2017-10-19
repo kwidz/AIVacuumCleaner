@@ -28,7 +28,7 @@ public:
 
 private:
     void run();
-    void machineLearning();
+    void machineLearning(Point p);
     Box* ObserveEnvironmentWithAllMySensors();
     std::vector<Point> UpdateMyState();
     Point ChooseAnAction(std::vector<Point> v);

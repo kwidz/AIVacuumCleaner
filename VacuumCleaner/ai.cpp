@@ -20,8 +20,7 @@ Box* env;
 int energy;
 int overallPoints;
 
-int timeBetweenResearch = 5000;
-int timeBetweenActions = 1000;
+int timeBetweenResearch = 2;
 
 int currentEnergy=50;
 int TotalEnergy=50;
@@ -43,8 +42,7 @@ AI::AI() : timer(new QTimer(this))
     pos_cible.x=1;
     pos_cible.y=1;
     effecteur.position = &pos_aspi;
-
-
+    energy = 50;
 }
 
 void AI::run(){
@@ -73,22 +71,23 @@ void AI::justDoIt()
         effecteur.vaccum(env, pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x);
         energy--;
 }
+    if(pos_aspi.x == 1 && pos_aspi.y == 1){
+        energy = TotalEnergy;
+    }
+
 }
 
 void AI::timerHit()
 {
     timerGhetto++;
-    timerGhetto=timerGhetto%3;
+    timerGhetto=timerGhetto%timeBetweenResearch;
     if(timerGhetto==1) {
         timerHit2();
     }
 
     //INTENTION
     justDoIt();
-
     srand (time(NULL));
-
-
 }
 
 
@@ -107,23 +106,19 @@ void AI::timerHit2()
     std::vector<Point> v;
     v = UpdateMyState();
     pos_cible = ChooseAnAction(v);
-    //machineLearning();
-
    //Résultat : tous les timeBetweenResearch, on effectue une remise en question. Mais sinon, on se dirige vers l'objectif courrant.
 
 
 }
 
-void AI::machineLearning(){
+void AI::machineLearning(Point pointMin){
 
 //Cette fonction va adapter le temps entre deux recherches de l'environnement selon ses dernières expériences
-
-if (pos_aspi.x != pos_cible.x || pos_aspi.y != pos_cible.y)
-{
-   timeBetweenResearch += 500;
-} else {
-   timeBetweenResearch -= 500;
-}
+    if(pointMin.x == pos_cible.x && pointMin.y == pos_cible.y){
+        timeBetweenResearch++;
+    } else if (timeBetweenResearch != 1){
+        timeBetweenResearch --;
+    }
 }
 
 Box* AI::ObserveEnvironmentWithAllMySensors(){
@@ -166,19 +161,21 @@ Point AI::ChooseAnAction(std::vector<Point> v){
     Point pointMin;
     pointMin.x = 1;
     pointMin.y = 1;
-    if ((pos_aspi.x+pos_aspi.y) <= energy){
+   if ((pos_aspi.x+pos_aspi.y) >= energy-5){
         return pointMin;
     }
+   if (!v.empty()){
     for (Point &p : v){
-        if (!v.empty()){
             //Calcul de distance et renvoie du point le plus près..
             if (distanceMin > (abs(p.x - pos_aspi.x) + abs(p.y - pos_aspi.y))){
             distanceMin = (abs(p.x - pos_aspi.x) + abs(p.y - pos_aspi.y));
             pointMin = p;
             }
+            }
         } else {
             pointMin = pos_aspi;
-        }
+
     }
+    machineLearning(pointMin);
     return pointMin;
 }
