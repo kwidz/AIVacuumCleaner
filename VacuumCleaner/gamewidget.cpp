@@ -56,7 +56,7 @@ void GameWidget::clear()
     ai.dustRemoved = 0;
     ai.jewelPicked = 0;
     ai.jewelRemoved = 0;
-    ai.overallPoints = 0;
+    this->overallPoints = 0;
     update();
 }
 

@@ -19,7 +19,7 @@ public:
     QLabel* jewelPicks;
     QLabel* energyPerActions;
     QLabel* MachineSearch;
-    int overallPoints;
+    int overallPoints=0;
 
 protected:
     void paintEvent(QPaintEvent *);
