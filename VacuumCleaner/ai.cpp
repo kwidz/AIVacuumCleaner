@@ -17,13 +17,6 @@ Point pos_cible;
 Point whatToDo;
 int timerGhetto;
 Box* env;
-int energy;
-int overallPoints;
-
-int timeBetweenResearch = 2;
-
-int currentEnergy=50;
-int TotalEnergy=50;
 
 Point AI::getPos_aspi() const
 {
@@ -42,7 +35,7 @@ AI::AI() : timer(new QTimer(this))
     pos_cible.x=1;
     pos_cible.y=1;
     effecteur.position = &pos_aspi;
-    energy = 50;
+    energy = 0;
 }
 
 void AI::run(){
@@ -53,35 +46,38 @@ void AI::run(){
 void AI::justDoIt()
 {
     if(pos_aspi.x<pos_cible.x) {
-        effecteur.movex(1);
+      effecteur.movex(1);
     } else if (pos_aspi.x>pos_cible.x) {
       effecteur.movex(-1);
     } else if (pos_aspi.y<pos_cible.y){
-       effecteur.movey(1);
+      effecteur.movey(1);
     } else if (pos_aspi.y>pos_cible.y){
-        effecteur.movey(-1);
+      effecteur.movey(-1);
     } else /*Sur la cible*/ {
         if ( env[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].getDust() && env[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].getJewel()) {
-            overallPoints-=2;
-        } else if (env[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].getDust() || env[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].getJewel()){
-            overallPoints++;
-        }else{
+            overallPoints-=1;
+            jewelRemoved+=1;
+            dustRemoved += 1;
+        }else if (env[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].getDust()){
+            overallPoints+=2;
+            dustRemoved+=1;
+        }else if (env[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].getJewel()){
+            overallPoints+=1;
+            jewelPicked++;
+            jewelPicked++;
+        }else {
             overallPoints--;
         }
+        }
         effecteur.vaccum(env, pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x);
-        energy--;
-}
-    if(pos_aspi.x == 1 && pos_aspi.y == 1){
-        energy = TotalEnergy;
-    }
-
+        energy++;
 }
 
 void AI::timerHit()
 {
     timerGhetto++;
     timerGhetto=timerGhetto%timeBetweenResearch;
-    if(timerGhetto==1) {
+    if(timerGhetto==0) {
         timerHit2();
     }
 
@@ -161,9 +157,6 @@ Point AI::ChooseAnAction(std::vector<Point> v){
     Point pointMin;
     pointMin.x = 1;
     pointMin.y = 1;
-   if ((pos_aspi.x+pos_aspi.y) >= energy-5){
-        return pointMin;
-    }
    if (!v.empty()){
     for (Point &p : v){
             //Calcul de distance et renvoie du point le plus près..
@@ -174,8 +167,7 @@ Point AI::ChooseAnAction(std::vector<Point> v){
             }
         } else {
             pointMin = pos_aspi;
-
     }
-    machineLearning(pointMin);
-    return pointMin;
+   machineLearning(pointMin);
+   return pointMin;
 }

@@ -12,6 +12,12 @@ public :
     Point pos_aspi;
     sensor senseur;
     effector effecteur;
+    int energy=0;
+    int overallPoints=0;
+    int jewelPicked=0;
+    int jewelRemoved=0;
+    int dustRemoved=0;
+    int timeBetweenResearch=2;
 private :
     QTimer* timer;
 

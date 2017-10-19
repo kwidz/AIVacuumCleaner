@@ -31,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
     game->jewelPicks = ui->JewelsPicks;
     game->jewelRemoved = ui->JewelsDestroyed;
     game->energyPerActions = ui->SpentEnergyPerActions;
+    game->MachineSearch = ui->MachineSearch;
 }
 
 MainWindow::~MainWindow()

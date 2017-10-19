@@ -18,6 +18,7 @@ public:
     QLabel* jewelRemoved;
     QLabel* jewelPicks;
     QLabel* energyPerActions;
+    QLabel* MachineSearch;
 
 
 protected:
