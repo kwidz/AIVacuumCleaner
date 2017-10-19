@@ -228,7 +228,7 @@ void GameWidget::paintUniverse(QPainter &p)
         this->dustRemoved->setText(QString("Dust removed : ").append(QString("%1").arg(ai.dustRemoved)));
         this->jewelPicks->setText(QString("Jewels picked up : ").append(QString("%1").arg(ai.jewelPicked)));
         this->jewelRemoved->setText(QString("Jewels destroyed : ").append(QString("%1").arg(ai.jewelRemoved)));
-        this->energyPerActions->setText(QString("Energy spent per actions : ").append(QString("%1").arg(ai.overallPoints)));
+        this->energyPerActions->setText(QString("Overall points : ").append(QString("%1").arg(ai.overallPoints)));
         this->MachineSearch->setText(QString("Machine Learning search interval : ").append(QString("%1").arg(ai.timeBetweenResearch)));
     }
     //painting vacuum position

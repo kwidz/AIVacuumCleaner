@@ -56,20 +56,17 @@ void AI::justDoIt()
     } else /*Sur la cible*/ {
         if ( env[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].getDust() && env[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].getJewel()) {
             overallPoints-=1;
-            jewelRemoved+=1;
-            dustRemoved += 1;
+            jewelRemoved++;
+            dustRemoved++;
         }else if (env[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].getDust()){
             overallPoints+=2;
             dustRemoved+=1;
         }else if (env[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].getJewel()){
             overallPoints+=1;
             jewelPicked++;
-            jewelPicked++;
-        }else {
-            overallPoints--;
-        }
         }
         effecteur.vaccum(env, pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x);
+        }
         energy++;
 }
 
@@ -164,10 +161,10 @@ Point AI::ChooseAnAction(std::vector<Point> v){
             distanceMin = (abs(p.x - pos_aspi.x) + abs(p.y - pos_aspi.y));
             pointMin = p;
             }
+            machineLearning(pointMin);
             }
         } else {
             pointMin = pos_aspi;
     }
-   machineLearning(pointMin);
    return pointMin;
 }
