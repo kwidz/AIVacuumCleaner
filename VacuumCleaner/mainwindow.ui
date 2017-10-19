@@ -97,6 +97,34 @@
          </widget>
         </item>
         <item>
+         <widget class="QLabel" name="DustRemoved">
+          <property name="text">
+           <string>DustRemoved :</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="JewelsPicks">
+          <property name="text">
+           <string>Jewels pick-up</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="JewelsDestroyed">
+          <property name="text">
+           <string>Jewels Destroyed</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="SpentEnergyPerActions">
+          <property name="text">
+           <string>Energy used per actions</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <layout class="QHBoxLayout" name="fileLayout"/>
         </item>
         <item>
