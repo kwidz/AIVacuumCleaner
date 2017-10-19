@@ -47,27 +47,41 @@ void AI::justDoIt()
 {
     if(pos_aspi.x<pos_cible.x) {
       effecteur.movex(1);
+      reboot = true;
+      energy++;
     } else if (pos_aspi.x>pos_cible.x) {
       effecteur.movex(-1);
+      reboot = true;
+      energy++;
     } else if (pos_aspi.y<pos_cible.y){
       effecteur.movey(1);
+      reboot = true;
+      energy++;
     } else if (pos_aspi.y>pos_cible.y){
       effecteur.movey(-1);
+      reboot = true;
+      energy++;
     } else /*Sur la cible*/ {
-        if ( env[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].getDust() && env[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].getJewel()) {
-            overallPoints-=1;
-            jewelRemoved++;
-            dustRemoved++;
-        }else if (env[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].getDust()){
-            overallPoints+=2;
-            dustRemoved+=1;
-        }else if (env[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].getJewel()){
-            overallPoints+=1;
-            jewelPicked++;
-        }
+        stats();
         effecteur.vaccum(env, pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x);
         }
-        energy++;
+}
+
+void AI::stats(){
+    if(reboot == true){
+        if ( env[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].getDust() && env[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].getJewel()) {
+                     *overallPoints-=1;
+                     jewelRemoved++;
+                     dustRemoved++;
+                 }else if (env[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].getDust()){
+                     *overallPoints+=2;
+                     dustRemoved+=1;
+                   }else if (env[pos_aspi.y*(*senseur.getUniverseSize()) + pos_aspi.x].getJewel()){
+                     *overallPoints+=1;
+                     jewelPicked++;
+                 }
+     reboot = false;
+    }
 }
 
 void AI::timerHit()
@@ -161,8 +175,8 @@ Point AI::ChooseAnAction(std::vector<Point> v){
             distanceMin = (abs(p.x - pos_aspi.x) + abs(p.y - pos_aspi.y));
             pointMin = p;
             }
-            machineLearning(pointMin);
             }
+    machineLearning(pointMin);
         } else {
             pointMin = pos_aspi;
     }

@@ -13,13 +13,15 @@ public :
     sensor senseur;
     effector effecteur;
     int energy=0;
-    int overallPoints=0;
     int jewelPicked=0;
     int jewelRemoved=0;
     int dustRemoved=0;
+    int* overallPoints;
     int timeBetweenResearch=2;
+    bool reboot = true;
 private :
     QTimer* timer;
+    void stats();
 
     Q_OBJECT
     signals:
